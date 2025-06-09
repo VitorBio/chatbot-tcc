@@ -57,13 +57,8 @@ async function adicionarHorarioDeAula(disciplina, dia, horaInicio, local) {
 // Em uma aplicação real, você obteria esses dados de um formulário, etc.
 console.log("Tentando adicionar horários de aulas ao Firestore...");
 
-adicionarHorarioDeAula("Português", "Segunda-feira", "10:30", "Sala 205");
-adicionarHorarioDeAula("Física", "Terça-feira", "14:00", "Laboratório 1");
+adicionarHorarioDeAula("portugues", "segunda", "10:30", "Sala 205");
+adicionarHorarioDeAula("fisica", "terça", "14:00", "Laboratório 1");
 // Você pode chamar a função várias vezes para adicionar mais aulas
-
-
-
-adicionarMensagemSimples();
-
 console.log("Tentando adicionar uma mensagem ao Firestore...");
 
