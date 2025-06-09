@@ -17,14 +17,13 @@ const db = admin.firestore();
 // Webhook principal
 app.post('/webhook', async (req, res) => {
   const intent = req.body.queryResult.intent.displayName;
+  const dia = req.body.queryResult.parameters['dia']?.toLowerCase();
+
+  if (!dia) {
+    return res.json({ fulfillmentText: "Por favor, informe um dia da semana para consultar." });
+  }
 
   if (intent === 'ConsultarHorarioDia') {
-    const dia = req.body.queryResult.parameters['dia']?.toLowerCase();
-
-    if (!dia) {
-      return res.json({ fulfillmentText: "Por favor, informe um dia da semana para consultar." });
-    }
-
     try {
       const snapshot = await db.collection('horariosDeAulas')
         .where('diaDaSemana', '==', dia)
@@ -51,6 +50,7 @@ app.post('/webhook', async (req, res) => {
 
   res.json({ fulfillmentText: 'Desculpe, não entendi sua pergunta.' });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
