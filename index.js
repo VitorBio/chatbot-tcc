@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const app = express();
+
 app.use(bodyParser.json());
 
 // Substitua pelo caminho correto do seu JSON de chave privada
@@ -16,14 +17,13 @@ const db = admin.firestore();
 // Webhook principal
 app.post('/webhook', async (req, res) => {
   const intent = req.body.queryResult.intent.displayName;
-  
-  
-  if (!dia) {
-  return res.json({ fulfillmentText: "Por favor, informe um dia da semana para consultar." });
-}
 
   if (intent === 'ConsultarHorarioDia') {
     const dia = req.body.queryResult.parameters['dia']?.toLowerCase();
+
+    if (!dia) {
+      return res.json({ fulfillmentText: "Por favor, informe um dia da semana para consultar." });
+    }
 
     try {
       const snapshot = await db.collection('horariosDeAulas')
