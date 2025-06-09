@@ -1,11 +1,12 @@
 {
-  "name": "code",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "name": "chatbot-tcc",
   "version": "1.0.0",
   "description": "Chatbot para o TCC",
-  "main": "TCC.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "index.js",
+  
   "keywords": [
     "IA",
     "escola",
@@ -14,6 +15,8 @@
   "author": "Bio",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^11.6.1"
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "firebase-admin": "^11.10.1"
   }
 }
