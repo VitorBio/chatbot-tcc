@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Conexão Firebase Firestore (CDN)</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <h1>Verificando a Conexão com o Firebase Firestore</h1>
+    <p>Abra o console do desenvolvedor do seu navegador (geralmente F12) para ver o resultado e verificar se os dados foram enviados.</p>
+
+   
+    <script type="module">
+        
+
+        // Apenas um conjunto de imports é necessário!
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+
+        // As linhas duplicadas foram removidas daqui!
+       
+        const firebaseConfig = {
+          apiKey: "AIzaSyDvk0MqNv4hWPJflIIUvZzv7_Y2FtAVMY8", 
+          authDomain: "tcc448-2.firebaseapp.com", 
+          projectId: "tcc448-2", 
+          storageBucket: "tcc448-2.firebasestorage.app", 
+          messagingSenderId: "798997552668", 
+          appId: "1:798997552668:web:1b62c00c3b4a7f2ce7c9d9",
+          measurementId: "G-08YPTD6DEC" 
+        };
+
+
+      
+        const app = initializeApp(firebaseConfig);
+
+        
+        const db = getFirestore(app);
+
+        async function adicionarHorarioDeAula(disciplina, dia, horaInicio, local) {
+          try {
+            console.log(`Tentando adicionar aula: ${disciplina} em ${dia} às ${horaInicio}`);
+
+            
+            const colecaoDeHorarios = collection(db, "horariosDeAulas");
+
+           
+            const dadosDaAula = {
+              disciplina: disciplina,
+              diaDaSemana: dia,
+              horaInicio: horaInicio, 
+              local: local,
+              criadoEm: new Date() 
+            };
+
+            
+            const novoDocumentoRef = await addDoc(colecaoDeHorarios, dadosDaAula);
+
+            console.log("✅ Sucesso: Informação de aula adicionada! Documento ID: ", novoDocumentoRef.id);
+            console.log("   Dados enviados:", dadosDaAula);
+
+          } catch (e) {
+            console.error("❌ Erro ao adicionar informação de aula: ", e);
+           
+            if (e.code === 'permission-denied') {
+                console.error("   Detalhe: Permissão negada! Verifique suas regras de segurança do Firestore. Atualmente, suas regras permitem 'read, write', mas verifique se não há outras configurações ou erros.");
+            } else if (e.code === 'unavailable') {
+                 console.error("   Detalhe: Serviço indisponível. Pode ser um problema de rede ou o serviço está fora do ar.");
+            } else if (e.code === 'invalid-argument') {
+                console.error("   Detalhe: Argumento inválido. Verifique os dados que você está tentando gravar.");
+            }
+             else {
+                console.error("   Detalhe do erro:", e.message); 
+            }
+          }
+        }
+
+        
+  
+        console.log("Iniciando teste de adição de horários de aulas ao Firestore...");
+
+        
+        adicionarHorarioDeAula("Português", "Segunda-feira", "10:30", "Sala 205");
+
+        
+        adicionarHorarioDeAula("Física", "Terça-feira", "14:00", "Laboratório 1");
+
+    </script>
+
+</body>
+</html>

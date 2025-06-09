@@ -1,0 +1,19 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "Chatbot para o TCC",
+  "main": "TCC.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "IA",
+    "escola",
+    "chatbot"
+  ],
+  "author": "Bio",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^11.6.1"
+  }
+}
